@@ -32,13 +32,18 @@ extern "C" {
 
 /* What is the input clock freq in hertz? */
 #define BSP_OSC_FREQ  12000000    /* 12 MHz oscillator */
-//#define BSP_XTAL_FREQ 32768       /* 32.768 KHz crystal */
 
 /* How many serial ports? */
-#define CONFIGURE_NUMBER_OF_TERMIOS_PORTS 1
+#define CONFIGURE_NUMBER_OF_TERMIOS_PORTS 2
 
 /* How big should the interrupt stack be? */
 #define CONFIGURE_INTERRUPT_STACK_MEMORY  (16 * 1024)
+
+/*functions to get the differents s3c2400 clks defined in speed.c*/
+ulong get_FCLK(void);
+ulong get_HCLK(void);
+ulong get_PCLK(void);
+ulong get_UCLK(void);
 
   
 /*
