@@ -14,8 +14,8 @@
  */
 #include <irq.h>
 #include <bsp.h>
-#include <registers.h>
 
+extern void default_int_handler();
 
 void BSP_rtems_irq_mngt_init() {
 
