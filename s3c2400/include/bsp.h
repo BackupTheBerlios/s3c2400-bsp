@@ -28,6 +28,18 @@ extern "C" {
 #include <iosupp.h>
 #include <console.h>
 #include <clockdrv.h>
+#include <s3c2400.h>
+
+/* What is the input clock freq in hertz? */
+#define BSP_OSC_FREQ  12000000    /* 12 MHz oscillator */
+//#define BSP_XTAL_FREQ 32768       /* 32.768 KHz crystal */
+
+/* How many serial ports? */
+#define CONFIGURE_NUMBER_OF_TERMIOS_PORTS 1
+
+/* How big should the interrupt stack be? */
+#define CONFIGURE_INTERRUPT_STACK_MEMORY  (16 * 1024)
+
   
 /*
  *  Define the interrupt mechanism for Time Test 27
