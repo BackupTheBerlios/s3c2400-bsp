@@ -32,15 +32,42 @@ extern void default_int_handler();
 
   /* enum of the possible interrupt sources */
 typedef enum {
-  BSP_INT_1 = 0,
-  BSP_INT_2 = 1,
-  BSP_UART  = 2,
-  BSP_MAX_INT   = 3
+  BSP_EINT0 = 0,
+  BSP_EINT1,
+  BSP_EINT2,
+  BSP_EINT3,
+  BSP_EINT4,
+  BSP_EINT5,
+  BSP_EINT6,
+  BSP_EINT7,
+  BSP_INT_TICK,
+  BSP_INT_WDT,
+  BSP_INT_TIMER0,
+  BSP_INT_TIMER1,
+  BSP_INT_TIMER2,
+  BSP_INT_TIMER3,
+  BSP_INT_TIMER4,
+  BSP_INT_UERR01,
+  Reserved,
+  BSP_INT_DMA0,
+  BSP_INT_DMA1,
+  BSP_INT_DMA2,
+  BSP_INT_DMA3,
+  BSP_INT_MMC,
+  BSP_INT_SPI,
+  BSP_INT_URXD0,
+  BSP_INT_URXD1,
+  BSP_INT_USBD,
+  BSP_INT_USBH,
+  BSP_INT_IIC,
+  BSP_INT_UTXD0,
+  BSP_INT_UTXD1,
+  BSP_INT_RTC,
+  BSP_INT_ADC
 } rtems_irq_symbolic_name;
 
-  /* define that can be useful (the values are just examples) */
-#define INTMASK		 0x01  
-#define VECTOR_TABLE	 0x00
+extern void *bsp_vector_table;
+#define VECTOR_TABLE &bsp_vector_table
   
 /*
  * Type definition for RTEMS managed interrupts
