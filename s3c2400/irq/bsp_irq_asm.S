@@ -14,7 +14,6 @@
  */
 
 #define __asm__
-#include  <registers.h>
 		
 /* 
  * Function to obtain, execute an IT handler and acknowledge the IT 
@@ -24,24 +23,18 @@
 	
 ExecuteITHandler :	
 
-  /*
-   * Here is the code to execute the appropriate INT handler 
-   */
+	ldr 	r0, =0x14400014  /* Read rINTOFFSET */
+	ldr	r1, [r0]
+
+	ldr     r0, =bsp_vector_table
+	ldr	r0, [r0, r1, LSL #2]	/* Read the address */
+	
+	stmdb	  sp!,{lr}
+	ldr     lr, =IRQ_return         /* prepare the return from handler  */
 	
 	mov pc, r0
 
-#if 0	
-/* 
- * Function to acknowledge the IT controller 
- */
-	.globl AckControler
-	
-AckControler:	  
+IRQ_return:
+	ldmia sp!,{lr}
 
-  /*
-   * Here is the code to acknowledge the PIC
-   */
-	
-  b	ReturnFromAck		/* return to ISR handler */
-
-#endif
+	mov pc, lr
