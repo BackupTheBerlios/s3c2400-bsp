@@ -94,7 +94,7 @@ void bsp_pretasking_hook(void)
 void bsp_start_default( void )
 {
     mmu_sect_map_t mem_map[] = {
-        {0x00000000, 0x0c100000,   1, MMU_CACHE_NONE},    /* Mirror of SDRAM for the vector handler*/
+        {0x00000000, 0x0c000000,   1, MMU_CACHE_NONE},    /* Mirror of SDRAM for the vector handler*/
         {0x0c000000, 0x0c000000,   8, MMU_CACHE_WTHROUGH},     /* SDRAM */
         {0x14000000, 0x14000000,   1, MMU_CACHE_NONE},     /* Internals Regs - */
         {0x15000000, 0x15000000,   1, MMU_CACHE_NONE},     /* Specials Internal Regs - */
