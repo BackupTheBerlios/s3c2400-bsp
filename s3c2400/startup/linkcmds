@@ -29,7 +29,7 @@ MEMORY {
  */
 
 /* The base for SDRAM is set to umon's APPRAMBASE */
-_sdram_base = DEFINED(_sdram_base) ? _sdram_base : 0x0c100000;
+_sdram_base = DEFINED(_sdram_base) ? _sdram_base : 0x0c100000; /*1MB reserved for bootloader+local raw copy of rtems exe*/
 _sdram_size = DEFINED(_sdram_size) ? _sdram_size : 7M;
 
 
