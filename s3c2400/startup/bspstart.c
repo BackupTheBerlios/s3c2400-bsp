@@ -18,9 +18,7 @@
 #include <rtems/libcsupport.h>
 #include <rtems/libio.h>
 #include "mmu.h"
-#include <s3c2400x.h>
-
-#include <uart.h>
+#include <s3c2400.h>
 
 /*-------------------------------------------------------------------------+
 | Global Variables
@@ -96,7 +94,7 @@ void bsp_pretasking_hook(void)
 void bsp_start_default( void )
 {
     mmu_sect_map_t mem_map[] = {
-        {0x00000000, 0x0c100000,   1, MMU_CACHE_NONE},    /* Mirror of SDRAM */
+        {0x00000000, 0x0c100000,   1, MMU_CACHE_NONE},    /* Mirror of SDRAM for the vector handler*/
         {0x0c000000, 0x0c000000,   8, MMU_CACHE_WTHROUGH},     /* SDRAM */
         {0x14000000, 0x14000000,   1, MMU_CACHE_NONE},     /* Internals Regs - */
         {0x15000000, 0x15000000,   1, MMU_CACHE_NONE},     /* Specials Internal Regs - */
@@ -114,11 +112,7 @@ void bsp_start_default( void )
   Cpu_table.extra_mpci_receive_server_stack = 0;
 
   /*disable interrupts */
-  //FIXME
-  //FIXME
-  
-  /*set interrupt priority to -1 (allow all priorties) */
-  //FIXME
+  rINTMSK=0xffffffff;//unmasked by dirvers
   
   /* Place RTEMS workspace at beginning of free memory. */
   BSP_Configuration.work_space_start = (void *)&_bss_free_start;
