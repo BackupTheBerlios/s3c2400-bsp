@@ -15,7 +15,6 @@
 
 #include <bsp.h>
 #include <irq.h>
-#include <registers.h>
 #include <rtems/score/thread.h>
 #include <rtems/score/apiext.h>
 
@@ -60,10 +59,12 @@ int BSP_install_rtems_irq_handler  (const rtems_irq_connect_data* irq)
     *(HdlTable + irq->name) = irq->hdl;
 
     /*
-     * Here is the code to install an interrupt vector
-     * for the BSP : unmask INT, ....
-     * ........................
+     * Enable interrupt on device
      */
+    if(irq->on)
+    {
+    	irq->on(irq);
+    }
 
     _CPU_ISR_Enable(level);
 
@@ -88,10 +89,11 @@ int BSP_remove_rtems_irq_handler  (const rtems_irq_connect_data* irq)
     _CPU_ISR_Disable(level);
 
     /*
-     * Here is the code to uninstall an interrupt vector
-     * for the BSP : mask INT, ....
-     * ........................
+     * Disable interrupt on device
      */
+    if(irq->off) {
+        irq->off(irq);
+    }
 
     /*
      * restore the default irq value
@@ -101,21 +103,4 @@ int BSP_remove_rtems_irq_handler  (const rtems_irq_connect_data* irq)
     _CPU_ISR_Enable(level);
 
     return 1;
-}
-
-
-
-void _ThreadProcessSignalsFromIrq (CPU_Exception_frame* ctx)
-{
-  /*
-   * Process pending signals that have not already been
-   * processed by _Thread_Displatch. This happens quite
-   * unfrequently : the ISR must have posted an action
-   * to the current running thread.
-   */
-  if ( _Thread_Do_post_task_switch_extension ||
-       _Thread_Executing->do_post_task_switch_extension ) {
-    _Thread_Executing->do_post_task_switch_extension = FALSE;
-    _API_extensions_Run_postswitch();
-  }
 }
